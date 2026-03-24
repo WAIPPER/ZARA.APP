@@ -515,6 +515,137 @@ mark.search-hl{background:rgba(108,99,255,.4);color:var(--text);border-radius:3p
 .login-hint span{color:var(--accent);cursor:pointer}
 .login-loading{display:none;width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;animation:spin .7s linear infinite;margin:0 auto}
 .login-loading.show{display:block}
+
+/* ════════════════════════════════
+   ✨ ANIMATIONS AMÉLIORÉES
+════════════════════════════════ */
+/* Bulles avec effet de rebond amélioré */
+@keyframes msgInMe{from{opacity:0;transform:translateX(20px) scale(.93)}to{opacity:1;transform:none}}
+@keyframes msgInThem{from{opacity:0;transform:translateX(-20px) scale(.93)}to{opacity:1;transform:none}}
+.msg-row.me{animation:msgInMe .35s cubic-bezier(.34,1.56,.64,1)}
+.msg-row:not(.me){animation:msgInThem .35s cubic-bezier(.34,1.56,.64,1)}
+
+/* Effet shimmer sur les bulles au survol */
+.bubble{position:relative;overflow:hidden}
+.bubble::before{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);transform:skewX(-20deg);transition:none;pointer-events:none}
+.bubble:hover::before{animation:shimmer .6s ease forwards}
+@keyframes shimmer{0%{left:-100%}100%{left:150%}}
+
+/* Chat item hover amélioré */
+.chat-item{transition:background .2s ease,transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s ease}
+.chat-item:hover{background:var(--card2);transform:translateX(5px);box-shadow:2px 0 0 var(--accent)}
+
+/* Avatar pulse sur online */
+.online-dot{animation:onlinePulse 2.5s ease-in-out infinite}
+@keyframes onlinePulse{0%,100%{box-shadow:0 0 0 0 rgba(67,233,123,.4)}50%{box-shadow:0 0 0 4px rgba(67,233,123,0)}}
+
+/* Send button amélioré */
+.send-btn{transition:all .2s cubic-bezier(.34,1.56,.64,1)}
+.send-btn:hover{transform:scale(1.12) rotate(-5deg)}
+.send-btn:active{transform:scale(.9) rotate(5deg)}
+
+/* Splash screen particules */
+.splash-particle{position:absolute;border-radius:50%;pointer-events:none;animation:particleFloat linear infinite}
+@keyframes particleFloat{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100px) scale(1);opacity:0}}
+
+/* Input bar glow focus */
+.input-wrap:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(108,99,255,.15)}
+
+/* Sidebar brand hover */
+.brand{cursor:default;transition:letter-spacing .3s ease}
+.brand:hover{letter-spacing:2px}
+
+/* Badge bounce */
+.badge{animation:badgePop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes badgePop{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+
+/* ════════════════════════════════
+   📸 STATUTS (WHATSAPP STYLE)
+════════════════════════════════ */
+.status-overlay{position:fixed;inset:0;background:#000;z-index:600;display:none;flex-direction:column}
+.status-overlay.show{display:flex;animation:fadeIn .25s ease}
+
+/* Barre de progression */
+.status-progress-bar{display:flex;gap:4px;padding:14px 14px 8px;position:absolute;top:0;left:0;right:0;z-index:5}
+.status-prog-seg{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.35);overflow:hidden}
+.status-prog-seg .seg-fill{height:100%;background:#fff;width:0%;border-radius:2px;transition:none}
+.status-prog-seg .seg-fill.active{animation:segProgress 5s linear forwards}
+.status-prog-seg .seg-fill.done{width:100%}
+@keyframes segProgress{from{width:0%}to{width:100%}}
+
+/* Header statut */
+.status-header{position:absolute;top:28px;left:0;right:0;padding:10px 16px;display:flex;align-items:center;gap:12px;z-index:5;background:linear-gradient(to bottom,rgba(0,0,0,.6),transparent)}
+.status-av{width:42px;height:42px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:20px;border:2px solid rgba(255,255,255,.5)}
+.status-author{flex:1}
+.status-author-name{font-weight:700;font-size:14px;color:#fff}
+.status-author-time{font-size:11px;color:rgba(255,255,255,.7)}
+.status-close-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:background .2s;backdrop-filter:blur(4px)}
+.status-close-btn:hover{background:rgba(255,255,255,.25)}
+
+/* Contenu statut */
+.status-content{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.status-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.status-text-content{font-size:28px;font-weight:800;text-align:center;padding:30px;line-height:1.4;z-index:2;position:relative;font-family:'Syne',sans-serif;text-shadow:0 2px 20px rgba(0,0,0,.3)}
+.status-emoji-big{font-size:100px;z-index:2;position:relative;animation:emojiFloat 3s ease-in-out infinite}
+@keyframes emojiFloat{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.08) rotate(3deg)}}
+
+/* Navigation statuts (tap gauche/droite) */
+.status-nav{position:absolute;inset:0;display:flex;z-index:3}
+.status-nav-left{flex:1;cursor:pointer}
+.status-nav-right{flex:1;cursor:pointer}
+
+/* Footer statut */
+.status-footer{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);z-index:5;display:flex;align-items:center;gap:10px}
+.status-reply-input{flex:1;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:25px;padding:10px 16px;color:#fff;font-family:inherit;font-size:13px;outline:none;backdrop-filter:blur(8px)}
+.status-reply-input::placeholder{color:rgba(255,255,255,.6)}
+.status-like-btn{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(4px)}
+.status-like-btn:hover{background:rgba(255,255,255,.25);transform:scale(1.1)}
+.status-like-btn.liked{animation:heartPop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes heartPop{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
+
+/* Page statuts dans sidebar */
+.statuses-page{position:fixed;inset:0;background:var(--bg);z-index:550;display:none;flex-direction:column}
+.statuses-page.show{display:flex;animation:slideInUp .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes slideInUp{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+.statuses-page-header{padding:18px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)}
+.sp-back{background:none;border:none;color:var(--text);cursor:pointer;font-size:20px;padding:4px;transition:color .2s}
+.sp-back:hover{color:var(--accent)}
+.sp-title{font-family:'Syne',sans-serif;font-weight:700;font-size:18px}
+.my-status-card{margin:16px;background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:18px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .2s}
+.my-status-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.my-status-av-wrap{position:relative}
+.my-status-av{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:26px}
+.my-status-add{position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700}
+.my-status-info{flex:1}
+.my-status-name{font-weight:700;font-size:14px}
+.my-status-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.statuses-section-title{padding:8px 16px;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.status-contact-item{display:flex;align-items:center;gap:14px;padding:12px 16px;cursor:pointer;transition:background .2s}
+.status-contact-item:hover{background:var(--card2)}
+.status-ring{width:52px;height:52px;border-radius:50%;padding:3px;flex-shrink:0}
+.status-ring.unseen{background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.status-ring.seen{background:var(--card2)}
+.status-ring-inner{width:100%;height:100%;border-radius:50%;background:var(--sidebar);display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid var(--sidebar)}
+.status-contact-info{flex:1}
+.status-contact-name{font-weight:600;font-size:13px}
+.status-contact-time{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* Bouton "Ajouter un statut" amélioré */
+.add-status-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:700;display:none;align-items:flex-end;justify-content:center}
+.add-status-modal.show{display:flex;animation:fadeIn .2s}
+.add-status-box{width:100%;max-width:480px;background:var(--sidebar);border-radius:24px 24px 0 0;padding:24px;animation:slideUp .3s cubic-bezier(.34,1.56,.64,1)}
+.add-status-preview{border-radius:16px;height:160px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative;overflow:hidden;cursor:pointer;transition:all .2s}
+.add-status-preview:hover{transform:scale(.99)}
+.add-status-colors{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;justify-content:center}
+.asc{width:34px;height:34px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .2s;flex-shrink:0}
+.asc.active{border-color:#fff;transform:scale(1.15)}
+.add-status-input{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:12px 16px;color:var(--text);font-family:'Syne',sans-serif;font-size:16px;font-weight:600;outline:none;text-align:center;margin-bottom:12px;transition:border-color .2s}
+.add-status-input:focus{border-color:var(--accent)}
+.add-status-emojis{display:flex;gap:8px;margin-bottom:16px;justify-content:center;flex-wrap:wrap}
+.ase{font-size:26px;cursor:pointer;padding:4px;border-radius:8px;transition:transform .15s}
+.ase:hover{transform:scale(1.3)}
+.add-status-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--accent),#a78bfa);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.add-status-btn:hover{transform:translateY(-2px)}
 </style>
 </head>
 <body>
@@ -560,6 +691,7 @@ mark.search-hl{background:rgba(108,99,255,.4);color:var(--text);border-radius:3p
 
 <!-- ═══════ SPLASH SCREEN ═══════ -->
 <div id="splash">
+  <div id="splash-particles"></div>
   <div class="splash-logo">Zara</div>
   <p class="splash-tagline">Messagerie nouvelle génération 🚀</p>
   <div class="splash-dots">
@@ -580,6 +712,7 @@ mark.search-hl{background:rgba(108,99,255,.4);color:var(--text);border-radius:3p
       <button class="icon-btn" onclick="openAddFriend()" title="Ajouter un ami" style="background:var(--accent);color:#fff">➕</button>
       <button class="icon-btn" onclick="openGroupModal()" title="Nouveau groupe">👥</button>
       <button class="icon-btn" onclick="showBroadcast()" title="Diffusion">📢</button>
+      <button class="icon-btn" onclick="openStatusesPage()" title="Statuts" style="position:relative">📸<span id="status-notif-dot" style="position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:var(--accent);display:none"></span></button>
       <button class="icon-btn" onclick="openMyProfile()" title="Mon profil">👤</button>
     </div>
   </div>
@@ -1186,6 +1319,88 @@ mark.search-hl{background:rgba(108,99,255,.4);color:var(--text);border-radius:3p
   <div>
     <div class="notif-name" id="notif-name"></div>
     <div class="notif-msg" id="notif-msg"></div>
+  </div>
+</div>
+
+
+<!-- ═══════ PAGE STATUTS ═══════ -->
+<div class="statuses-page" id="statuses-page">
+  <div class="statuses-page-header">
+    <button class="sp-back" onclick="closeStatusesPage()">←</button>
+    <span class="sp-title">📸 Statuts</span>
+  </div>
+
+  <!-- Mon statut -->
+  <div class="my-status-card" onclick="openAddStatus()">
+    <div class="my-status-av-wrap">
+      <div class="my-status-av">😎</div>
+      <div class="my-status-add">+</div>
+    </div>
+    <div class="my-status-info">
+      <div class="my-status-name">Mon statut</div>
+      <div class="my-status-sub">Appuie pour ajouter un statut</div>
+    </div>
+    <span style="color:var(--muted);font-size:20px">›</span>
+  </div>
+
+  <!-- Statuts récents -->
+  <div class="statuses-section-title">RÉCENTS</div>
+  <div id="statuses-list"></div>
+</div>
+
+<!-- ═══════ VIEWER STATUT ═══════ -->
+<div class="status-overlay" id="status-overlay">
+  <div class="status-progress-bar" id="status-prog-bar"></div>
+  <div class="status-header">
+    <div class="status-av" id="status-av">👤</div>
+    <div class="status-author">
+      <div class="status-author-name" id="status-author-name">—</div>
+      <div class="status-author-time" id="status-author-time">maintenant</div>
+    </div>
+    <button class="status-close-btn" onclick="closeStatusViewer()">✕</button>
+  </div>
+  <div class="status-content">
+    <div class="status-bg" id="status-bg"></div>
+    <div class="status-nav">
+      <div class="status-nav-left" onclick="prevStatus()"></div>
+      <div class="status-nav-right" onclick="nextStatus()"></div>
+    </div>
+  </div>
+  <div class="status-footer">
+    <input class="status-reply-input" placeholder="Répondre…" id="status-reply-input" onkeydown="if(event.key==='Enter')sendStatusReply()">
+    <button class="status-like-btn" id="status-like-btn" onclick="likeStatus()">❤️</button>
+  </div>
+</div>
+
+<!-- ═══════ AJOUTER UN STATUT ═══════ -->
+<div class="add-status-modal" id="add-status-modal" onclick="if(event.target===this)closeAddStatus()">
+  <div class="add-status-box">
+    <h3 style="font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:14px">✨ Nouveau statut</h3>
+    <div class="add-status-preview" id="add-status-preview" style="background:linear-gradient(135deg,#6c63ff,#a78bfa)">
+      <span id="add-status-preview-text" style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;text-align:center;padding:20px;text-shadow:0 2px 10px rgba(0,0,0,.3)">Tape quelque chose... ✨</span>
+    </div>
+    <div class="add-status-colors">
+      <div class="asc active" style="background:linear-gradient(135deg,#6c63ff,#a78bfa)" onclick="setStatusColor(this,'linear-gradient(135deg,#6c63ff,#a78bfa)')"></div>
+      <div class="asc" style="background:linear-gradient(135deg,#ff6584,#ff8fab)" onclick="setStatusColor(this,'linear-gradient(135deg,#ff6584,#ff8fab)')"></div>
+      <div class="asc" style="background:linear-gradient(135deg,#43e97b,#38f9d7)" onclick="setStatusColor(this,'linear-gradient(135deg,#43e97b,#38f9d7)')"></div>
+      <div class="asc" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)" onclick="setStatusColor(this,'linear-gradient(135deg,#f59e0b,#fbbf24)')"></div>
+      <div class="asc" style="background:linear-gradient(135deg,#06b6d4,#0ea5e9)" onclick="setStatusColor(this,'linear-gradient(135deg,#06b6d4,#0ea5e9)')"></div>
+      <div class="asc" style="background:linear-gradient(135deg,#1a1a2e,#16213e)" onclick="setStatusColor(this,'linear-gradient(135deg,#1a1a2e,#16213e)')"></div>
+      <div class="asc" style="background:linear-gradient(135deg,#ec4899,#f472b6)" onclick="setStatusColor(this,'linear-gradient(135deg,#ec4899,#f472b6)')"></div>
+      <div class="asc" style="background:linear-gradient(135deg,#134e5e,#71b280)" onclick="setStatusColor(this,'linear-gradient(135deg,#134e5e,#71b280)')"></div>
+    </div>
+    <input class="add-status-input" id="add-status-input" type="text" maxlength="120" placeholder="Écris ton statut…" oninput="updateStatusPreview(this.value)">
+    <div class="add-status-emojis">
+      <span class="ase" onclick="addStatusEmoji('🔥')">🔥</span>
+      <span class="ase" onclick="addStatusEmoji('❤️')">❤️</span>
+      <span class="ase" onclick="addStatusEmoji('😂')">😂</span>
+      <span class="ase" onclick="addStatusEmoji('🚀')">🚀</span>
+      <span class="ase" onclick="addStatusEmoji('✨')">✨</span>
+      <span class="ase" onclick="addStatusEmoji('🎉')">🎉</span>
+      <span class="ase" onclick="addStatusEmoji('💪')">💪</span>
+      <span class="ase" onclick="addStatusEmoji('🌟')">🌟</span>
+    </div>
+    <button class="add-status-btn" onclick="publishStatus()">📸 Publier le statut</button>
   </div>
 </div>
 
@@ -3133,6 +3348,253 @@ if (typeof _origSendMsg === 'function') {
   };
 }
 
+
+/* ════════════════════════════════
+   ✨ ANIMATIONS SPLASH PARTICULES
+════════════════════════════════ */
+function createSplashParticles() {
+  const container = document.getElementById('splash-particles');
+  if (!container) return;
+  container.style.cssText = 'position:absolute;inset:0;overflow:hidden;pointer-events:none';
+  const colors = ['#6c63ff','#ff6584','#43e97b','#a78bfa','#06b6d4'];
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    const size = Math.random() * 8 + 4;
+    p.className = 'splash-particle';
+    p.style.cssText = `
+      width:${size}px;height:${size}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      left:${Math.random()*100}%;
+      opacity:${Math.random()*.5+.2};
+      animation-duration:${Math.random()*3+2}s;
+      animation-delay:${Math.random()*2}s;
+    `;
+    container.appendChild(p);
+  }
+}
+createSplashParticles();
+
+/* ════════════════════════════════
+   📸 STATUTS - DONNÉES
+════════════════════════════════ */
+let MY_STATUSES = [];
+let currentStatusColor = 'linear-gradient(135deg,#6c63ff,#a78bfa)';
+
+const CONTACT_STATUSES = [
+  {id:1, name:'Mamadou Diallo', avatar:'👨🏿', time:'il y a 2 min', seen:false,
+   statuses:[
+     {bg:'linear-gradient(135deg,#6c63ff,#a78bfa)', text:'En mode coding 💻🔥', type:'text'},
+     {bg:'linear-gradient(135deg,#43e97b,#38f9d7)', text:'La vie est belle ! 🌟', type:'text'},
+   ]
+  },
+  {id:2, name:'Fatoumata Bah', avatar:'👩🏿', time:'il y a 15 min', seen:false,
+   statuses:[
+     {bg:'linear-gradient(135deg,#ff6584,#ff8fab)', text:'Bonne nuit tout le monde 🌙❤️', type:'text'},
+   ]
+  },
+  {id:3, name:'Ibrahim Sow', avatar:'👨🏿‍💼', time:'il y a 1h', seen:true,
+   statuses:[
+     {bg:'linear-gradient(135deg,#f59e0b,#fbbf24)', text:'Alhamdulillah ! 🙏✨', type:'text'},
+     {bg:'linear-gradient(135deg,#134e5e,#71b280)', text:'Conakry ce matin 🌅', type:'text'},
+   ]
+  },
+  {id:4, name:'Aissatou Diallo', avatar:'👩🏿‍🎓', time:'il y a 3h', seen:true,
+   statuses:[
+     {bg:'linear-gradient(135deg,#ec4899,#f472b6)', text:'Examen réussi 🎓🎉💪', type:'text'},
+   ]
+  },
+];
+
+let currentStatusContact = null;
+let currentStatusIndex = 0;
+let statusTimer = null;
+
+/* ── Page Statuts ── */
+function openStatusesPage() {
+  document.getElementById('statuses-page').classList.add('show');
+  renderStatusesList();
+  // Afficher le point rouge si statuts non vus
+  const unseen = CONTACT_STATUSES.filter(c => !c.seen).length;
+  const dot = document.getElementById('status-notif-dot');
+  if (dot) dot.style.display = unseen > 0 ? 'block' : 'none';
+}
+
+function closeStatusesPage() {
+  document.getElementById('statuses-page').classList.remove('show');
+}
+
+function renderStatusesList() {
+  const list = document.getElementById('statuses-list');
+  if (!list) return;
+  list.innerHTML = CONTACT_STATUSES.map(c => `
+    <div class="status-contact-item" onclick="openStatusViewer(${c.id})">
+      <div class="status-ring ${c.seen ? 'seen' : 'unseen'}">
+        <div class="status-ring-inner">${c.avatar}</div>
+      </div>
+      <div class="status-contact-info">
+        <div class="status-contact-name">${c.name}</div>
+        <div class="status-contact-time">${c.statuses.length} statut${c.statuses.length>1?'s':''} · ${c.time}</div>
+      </div>
+      ${!c.seen ? '<span style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0"></span>' : ''}
+    </div>
+  `).join('');
+}
+
+/* ── Viewer Statut ── */
+function openStatusViewer(contactId) {
+  const c = CONTACT_STATUSES.find(x => x.id === contactId);
+  if (!c) return;
+  currentStatusContact = c;
+  currentStatusIndex = 0;
+  c.seen = true;
+  document.getElementById('status-overlay').classList.add('show');
+  document.getElementById('status-av').textContent = c.avatar;
+  document.getElementById('status-author-name').textContent = c.name;
+  showStatusSlide(0);
+  // Mettre à jour le point
+  const unseen = CONTACT_STATUSES.filter(x => !x.seen).length;
+  const dot = document.getElementById('status-notif-dot');
+  if (dot) dot.style.display = unseen > 0 ? 'block' : 'none';
+}
+
+function showStatusSlide(index) {
+  if (!currentStatusContact) return;
+  const statuses = currentStatusContact.statuses;
+  if (index >= statuses.length) { closeStatusViewer(); return; }
+  if (index < 0) { closeStatusViewer(); return; }
+  currentStatusIndex = index;
+  const s = statuses[index];
+
+  // Barre de progression
+  const bar = document.getElementById('status-prog-bar');
+  bar.innerHTML = statuses.map((_, i) => `
+    <div class="status-prog-seg">
+      <div class="seg-fill ${i < index ? 'done' : i === index ? 'active' : ''}"></div>
+    </div>
+  `).join('');
+
+  // Contenu
+  const bg = document.getElementById('status-bg');
+  const timeEl = document.getElementById('status-author-time');
+  timeEl.textContent = currentStatusContact.time;
+
+  bg.innerHTML = '';
+  bg.style.background = s.bg;
+  const textEl = document.createElement('div');
+  textEl.className = 'status-text-content';
+  textEl.style.color = '#fff';
+  textEl.textContent = s.text;
+  bg.appendChild(textEl);
+
+  // Reset like
+  const likeBtn = document.getElementById('status-like-btn');
+  if (likeBtn) likeBtn.classList.remove('liked');
+
+  // Timer auto-avance
+  clearTimeout(statusTimer);
+  statusTimer = setTimeout(() => nextStatus(), 5000);
+}
+
+function nextStatus() {
+  clearTimeout(statusTimer);
+  if (currentStatusContact && currentStatusIndex < currentStatusContact.statuses.length - 1) {
+    showStatusSlide(currentStatusIndex + 1);
+  } else {
+    closeStatusViewer();
+  }
+}
+
+function prevStatus() {
+  clearTimeout(statusTimer);
+  if (currentStatusIndex > 0) showStatusSlide(currentStatusIndex - 1);
+}
+
+function closeStatusViewer() {
+  clearTimeout(statusTimer);
+  document.getElementById('status-overlay').classList.remove('show');
+  currentStatusContact = null;
+  renderStatusesList();
+}
+
+function likeStatus() {
+  const btn = document.getElementById('status-like-btn');
+  btn.classList.toggle('liked');
+  btn.textContent = btn.classList.contains('liked') ? '🔥' : '❤️';
+  showToast(btn.classList.contains('liked') ? '🔥 Réaction envoyée !' : '❤️ Réaction retirée');
+}
+
+function sendStatusReply() {
+  const input = document.getElementById('status-reply-input');
+  if (!input.value.trim()) return;
+  showToast('💬 Réponse envoyée à ' + (currentStatusContact ? currentStatusContact.name : ''));
+  input.value = '';
+}
+
+/* ── Ajouter un statut ── */
+function openAddStatus() {
+  document.getElementById('add-status-modal').classList.add('show');
+  document.getElementById('add-status-input').value = '';
+  updateStatusPreview('Tape quelque chose... ✨');
+}
+
+function closeAddStatus() {
+  document.getElementById('add-status-modal').classList.remove('show');
+}
+
+function setStatusColor(el, color) {
+  currentStatusColor = color;
+  document.getElementById('add-status-preview').style.background = color;
+  document.querySelectorAll('.asc').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function updateStatusPreview(text) {
+  const preview = document.getElementById('add-status-preview-text');
+  if (preview) preview.textContent = text || 'Tape quelque chose... ✨';
+}
+
+function addStatusEmoji(emoji) {
+  const input = document.getElementById('add-status-input');
+  input.value += emoji;
+  updateStatusPreview(input.value);
+}
+
+function publishStatus() {
+  const input = document.getElementById('add-status-input');
+  const text = input.value.trim();
+  if (!text) { showToast('✏️ Écris quelque chose !'); return; }
+
+  MY_STATUSES.unshift({bg: currentStatusColor, text, time: 'maintenant', type:'text'});
+
+  // Mettre à jour le bouton dans la page statuts
+  const sub = document.querySelector('.my-status-sub');
+  if (sub) sub.textContent = `${MY_STATUSES.length} statut${MY_STATUSES.length>1?'s':''} · maintenant`;
+
+  closeAddStatus();
+  showToast('🎉 Statut publié !');
+
+  // Ouvrir le viewer de son propre statut
+  setTimeout(() => {
+    const myContact = {
+      id: 0, name: 'Mon statut', avatar: '😎',
+      time: 'maintenant', seen: true,
+      statuses: MY_STATUSES
+    };
+    currentStatusContact = myContact;
+    currentStatusIndex = 0;
+    document.getElementById('status-overlay').classList.add('show');
+    document.getElementById('status-av').textContent = '😎';
+    document.getElementById('status-author-name').textContent = 'Mon statut';
+    showStatusSlide(0);
+  }, 300);
+}
+
+/* ── Afficher le point notif si statuts non vus au chargement ── */
+setTimeout(() => {
+  const unseen = CONTACT_STATUSES.filter(c => !c.seen).length;
+  const dot = document.getElementById('status-notif-dot');
+  if (dot && unseen > 0) dot.style.display = 'block';
+}, 2000);
 </script>
 </body>
 </html>
