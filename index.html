@@ -366,6 +366,50 @@ mark.search-hl{background:rgba(108,99,255,.4);color:var(--text);border-radius:3p
 .poll-rm-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;transition:color .2s;padding:4px}
 .poll-rm-btn:hover{color:var(--accent2)}
 
+/* ─── PANNEAU THÈMES AVANCÉ ─── */
+.themes-panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;display:none;align-items:flex-end;justify-content:center}
+.themes-panel-overlay.show{display:flex;animation:fadeIn .2s}
+.themes-panel{width:100%;max-width:480px;background:var(--sidebar);border-radius:24px 24px 0 0;padding:20px;max-height:90vh;overflow-y:auto;animation:slideUp .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.themes-handle{width:40px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 18px}
+.themes-panel h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:4px;text-align:center}
+.themes-panel .tp-sub{font-size:12px;color:var(--muted);text-align:center;margin-bottom:18px}
+.tp-section{margin-bottom:20px}
+.tp-section-title{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.tp-colors{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:4px}
+.tp-color{height:44px;border-radius:12px;cursor:pointer;border:3px solid transparent;transition:all .2s;position:relative}
+.tp-color.active{border-color:#fff;transform:scale(1.08)}
+.tp-color.active::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:800}
+.tp-color:hover{transform:scale(1.06)}
+.tp-fonts{display:flex;gap:8px}
+.tp-font-btn{flex:1;padding:10px;background:var(--card2);border:2px solid var(--border);border-radius:12px;cursor:pointer;text-align:center;transition:all .2s;font-family:inherit;color:var(--text)}
+.tp-font-btn.active{border-color:var(--accent);background:rgba(108,99,255,.1);color:var(--accent)}
+.tp-font-btn:hover{border-color:var(--accent)}
+.tp-font-size{font-weight:700}
+.tp-font-label{font-size:10px;color:var(--muted);margin-top:2px}
+.tp-wallpapers{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tp-wp{aspect-ratio:16/9;border-radius:10px;cursor:pointer;border:3px solid transparent;display:flex;align-items:center;justify-content:center;font-size:20px;transition:all .2s;overflow:hidden}
+.tp-wp.active{border-color:var(--accent);transform:scale(1.04)}
+.tp-wp:hover{border-color:var(--accent);opacity:.9}
+.tp-close-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--accent),#a78bfa);color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px;transition:all .2s}
+.tp-close-btn:hover{transform:translateY(-2px)}
+
+/* ─── BOUTON THÈME RAPIDE DANS SIDEBAR ─── */
+.quick-theme-btn{display:flex;align-items:center;gap:8px;padding:9px 12px;margin:0 8px 6px;background:var(--card);border-radius:12px;cursor:pointer;border:1px solid var(--border);transition:all .2s;font-size:12px;font-weight:600;color:var(--muted)}
+.quick-theme-btn:hover{background:var(--card2);color:var(--text)}
+.theme-preview-dots{display:flex;gap:3px}
+.theme-dot{width:8px;height:8px;border-radius:50%}
+
+/* ─── NOTIFICATIONS PUSH ─── */
+.notif-permission-banner{background:linear-gradient(135deg,rgba(108,99,255,.15),rgba(255,101,132,.1));border:1px solid rgba(108,99,255,.3);border-radius:14px;padding:12px 14px;margin:0 8px 8px;display:none;align-items:center;gap:10px;animation:fadeUp .3s ease}
+.notif-permission-banner.show{display:flex}
+.notif-perm-text{flex:1;font-size:12px;line-height:1.4}
+.notif-perm-text strong{display:block;font-size:13px;margin-bottom:2px}
+.notif-perm-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:7px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+.notif-perm-btn:hover{transform:scale(1.04)}
+.notif-perm-close{cursor:pointer;color:var(--muted);font-size:16px;padding:2px;transition:color .2s;flex-shrink:0}
+.notif-perm-close:hover{color:var(--text)}
+
 /* ─── NOTIFICATION SOUND INDICATOR ─── */
 .sound-wave{display:none;align-items:center;gap:2px;height:16px}
 .sound-wave.playing{display:flex}
@@ -557,6 +601,28 @@ mark.search-hl{background:rgba(108,99,255,.4);color:var(--text);border-radius:3p
     <div class="tab" onclick="setTab(this,'groups')">Groupes</div>
   </div>
   <div class="chat-list" id="chat-list"></div>
+
+  <!-- Bouton thème rapide -->
+  <div class="quick-theme-btn" onclick="openThemesPanel()">
+    <span>🎨</span>
+    <span style="flex:1">Thème & couleurs</span>
+    <div class="theme-preview-dots" id="theme-preview-dots">
+      <div class="theme-dot" id="tdot1" style="background:#6c63ff"></div>
+      <div class="theme-dot" id="tdot2" style="background:#ff6584"></div>
+      <div class="theme-dot" id="tdot3" style="background:#43e97b"></div>
+    </div>
+  </div>
+
+  <!-- Bannière permission notifications -->
+  <div class="notif-permission-banner" id="notif-banner">
+    <span style="font-size:22px">🔔</span>
+    <div class="notif-perm-text">
+      <strong>Activer les notifications</strong>
+      Sois alerté des nouveaux messages
+    </div>
+    <button class="notif-perm-btn" onclick="requestNotifPermission()">Activer</button>
+    <span class="notif-perm-close" onclick="dismissNotifBanner()">✕</span>
+  </div>
 </aside>
 
 <main class="main" id="main-chat">
@@ -1122,6 +1188,64 @@ mark.search-hl{background:rgba(108,99,255,.4);color:var(--text);border-radius:3p
     <div class="notif-msg" id="notif-msg"></div>
   </div>
 </div>
+
+<!-- ═══════ PANNEAU THÈMES AVANCÉ ═══════ -->
+<div class="themes-panel-overlay" id="themes-panel-overlay" onclick="if(event.target===this)closeThemesPanel()">
+  <div class="themes-panel">
+    <div class="themes-handle"></div>
+    <h3>🎨 Thème &amp; personnalisation</h3>
+    <p class="tp-sub">Personnalise Zara à ton goût</p>
+
+    <div class="tp-section">
+      <div class="tp-section-title">Couleur principale</div>
+      <div class="tp-colors">
+        <div class="tp-color active" id="tc0" style="background:linear-gradient(135deg,#6c63ff,#a78bfa)" onclick="applyThemeColor(this,'#6c63ff','#a78bfa')" title="Violet"></div>
+        <div class="tp-color" id="tc1" style="background:linear-gradient(135deg,#06b6d4,#0ea5e9)" onclick="applyThemeColor(this,'#06b6d4','#0ea5e9')" title="Cyan"></div>
+        <div class="tp-color" id="tc2" style="background:linear-gradient(135deg,#10b981,#34d399)" onclick="applyThemeColor(this,'#10b981','#34d399')" title="Vert"></div>
+        <div class="tp-color" id="tc3" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)" onclick="applyThemeColor(this,'#f59e0b','#fbbf24')" title="Or"></div>
+        <div class="tp-color" id="tc4" style="background:linear-gradient(135deg,#ef4444,#f87171)" onclick="applyThemeColor(this,'#ef4444','#f87171')" title="Rouge"></div>
+        <div class="tp-color" id="tc5" style="background:linear-gradient(135deg,#ec4899,#f472b6)" onclick="applyThemeColor(this,'#ec4899','#f472b6')" title="Rose"></div>
+        <div class="tp-color" id="tc6" style="background:linear-gradient(135deg,#8b5cf6,#c4b5fd)" onclick="applyThemeColor(this,'#8b5cf6','#c4b5fd')" title="Lavande"></div>
+        <div class="tp-color" id="tc7" style="background:linear-gradient(135deg,#14b8a6,#2dd4bf)" onclick="applyThemeColor(this,'#14b8a6','#2dd4bf')" title="Turquoise"></div>
+        <div class="tp-color" id="tc8" style="background:linear-gradient(135deg,#f97316,#fb923c)" onclick="applyThemeColor(this,'#f97316','#fb923c')" title="Orange"></div>
+        <div class="tp-color" id="tc9" style="background:linear-gradient(135deg,#64748b,#94a3b8)" onclick="applyThemeColor(this,'#64748b','#94a3b8')" title="Ardoise"></div>
+      </div>
+    </div>
+
+    <div class="tp-section">
+      <div class="tp-section-title">Taille des messages</div>
+      <div class="tp-fonts">
+        <div class="tp-font-btn" onclick="applyFontSize('12px',this)"><div class="tp-font-size" style="font-size:12px">Aa</div><div class="tp-font-label">Petite</div></div>
+        <div class="tp-font-btn active" onclick="applyFontSize('14px',this)"><div class="tp-font-size" style="font-size:14px">Aa</div><div class="tp-font-label">Normale</div></div>
+        <div class="tp-font-btn" onclick="applyFontSize('16px',this)"><div class="tp-font-size" style="font-size:16px">Aa</div><div class="tp-font-label">Grande</div></div>
+        <div class="tp-font-btn" onclick="applyFontSize('18px',this)"><div class="tp-font-size" style="font-size:18px">Aa</div><div class="tp-font-label">XL</div></div>
+      </div>
+    </div>
+
+    <div class="tp-section">
+      <div class="tp-section-title">Fond de chat</div>
+      <div class="tp-wallpapers">
+        <div class="tp-wp active" id="tw0" style="background:var(--bg)" onclick="applyWallpaper(this,'')">⬛ Défaut</div>
+        <div class="tp-wp" id="tw1" style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e)" onclick="applyWallpaper(this,'linear-gradient(135deg,#0f0c29,#302b63,#24243e)')">🌌 Galaxie</div>
+        <div class="tp-wp" id="tw2" style="background:linear-gradient(135deg,#134e5e,#71b280)" onclick="applyWallpaper(this,'linear-gradient(135deg,#134e5e,#71b280)')">🌿 Nature</div>
+        <div class="tp-wp" id="tw3" style="background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)" onclick="applyWallpaper(this,'linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)')">🌃 Nuit</div>
+        <div class="tp-wp" id="tw4" style="background:linear-gradient(135deg,#2d1b69,#11998e)" onclick="applyWallpaper(this,'linear-gradient(135deg,#2d1b69,#11998e)')">🎆 Aurore</div>
+        <div class="tp-wp" id="tw5" style="background:radial-gradient(circle,#1a0533,#0d0221)" onclick="applyWallpaper(this,'radial-gradient(circle,#1a0533,#0d0221)')">🔮 Cosmos</div>
+      </div>
+    </div>
+
+    <div class="tp-section">
+      <div class="tp-section-title">Mode d'affichage</div>
+      <div style="display:flex;gap:10px">
+        <div class="tp-font-btn active" id="mode-dark-btn" onclick="setDisplayMode('dark')"><div style="font-size:20px">🌙</div><div class="tp-font-label">Sombre</div></div>
+        <div class="tp-font-btn" id="mode-light-btn" onclick="setDisplayMode('light')"><div style="font-size:20px">☀️</div><div class="tp-font-label">Clair</div></div>
+      </div>
+    </div>
+
+    <button class="tp-close-btn" onclick="closeThemesPanel()">✓ Appliquer et fermer</button>
+  </div>
+</div>
+
 
 <script>
 const CONTACTS=[
@@ -2820,7 +2944,195 @@ window.addEventListener('load', () => {
   if (isMobile()) {
     document.getElementById('main-chat').classList.remove('chat-active');
   }
+  // Init notifications
+  initNotifBanner();
 });
+
+/* ════════════════════════════════
+   🎨 PANNEAU THÈMES AVANCÉ
+════════════════════════════════ */
+let currentAccent = '#6c63ff';
+let currentAccent2 = '#a78bfa';
+
+function openThemesPanel() {
+  document.getElementById('themes-panel-overlay').classList.add('show');
+}
+function closeThemesPanel() {
+  document.getElementById('themes-panel-overlay').classList.remove('show');
+  showToast('🎨 Thème appliqué avec succès !');
+}
+
+function applyThemeColor(el, accent, accent2) {
+  currentAccent = accent;
+  currentAccent2 = accent2;
+  document.documentElement.style.setProperty('--accent', accent);
+  document.documentElement.style.setProperty('--bubble-me', `linear-gradient(135deg,${accent},${accent2})`);
+  // Mise à jour des points de preview dans la sidebar
+  const d1 = document.getElementById('tdot1');
+  const d2 = document.getElementById('tdot2');
+  if (d1) d1.style.background = accent;
+  if (d2) d2.style.background = accent2;
+  // Marquer actif
+  document.querySelectorAll('.tp-color').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  // Sync avec l'ancien setTheme si il existe
+  document.querySelectorAll('.theme-swatch').forEach(s => s.classList.remove('active'));
+}
+
+function applyFontSize(size, el) {
+  document.querySelectorAll('.bubble').forEach(b => b.style.fontSize = size);
+  document.querySelectorAll('#msg-input').forEach(i => i.style.fontSize = size);
+  document.querySelectorAll('.tp-font-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function applyWallpaper(el, bg) {
+  const main = document.getElementById('main-chat');
+  if (bg) {
+    main.style.backgroundImage = bg;
+    main.style.backgroundSize = 'cover';
+  } else {
+    main.style.backgroundImage = '';
+    main.style.background = '';
+  }
+  document.querySelectorAll('.tp-wp').forEach(w => w.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function setDisplayMode(mode) {
+  const darkBtn = document.getElementById('mode-dark-btn');
+  const lightBtn = document.getElementById('mode-light-btn');
+  if (mode === 'light') {
+    document.body.classList.add('light-mode');
+    isLightMode = true;
+    if (darkBtn) darkBtn.classList.remove('active');
+    if (lightBtn) lightBtn.classList.add('active');
+  } else {
+    document.body.classList.remove('light-mode');
+    isLightMode = false;
+    if (darkBtn) darkBtn.classList.add('active');
+    if (lightBtn) lightBtn.classList.remove('active');
+  }
+}
+
+/* ════════════════════════════════
+   🔔 NOTIFICATIONS PUSH
+════════════════════════════════ */
+let notifEnabled = false;
+
+function initNotifBanner() {
+  if ('Notification' in window) {
+    if (Notification.permission === 'default') {
+      setTimeout(() => {
+        const banner = document.getElementById('notif-banner');
+        if (banner) banner.classList.add('show');
+      }, 3000);
+    } else if (Notification.permission === 'granted') {
+      notifEnabled = true;
+    }
+  }
+}
+
+function requestNotifPermission() {
+  if (!('Notification' in window)) {
+    showToast('❌ Notifications non supportées par ce navigateur');
+    return;
+  }
+  Notification.requestPermission().then(permission => {
+    const banner = document.getElementById('notif-banner');
+    if (permission === 'granted') {
+      notifEnabled = true;
+      if (banner) banner.classList.remove('show');
+      showToast('🔔 Notifications activées !');
+      // Notification de test
+      setTimeout(() => {
+        sendPushNotif('Zara', 'Les notifications sont activées 🎉', '💬');
+      }, 1000);
+    } else {
+      if (banner) banner.classList.remove('show');
+      showToast('🔕 Notifications refusées');
+    }
+  });
+}
+
+function dismissNotifBanner() {
+  const banner = document.getElementById('notif-banner');
+  if (banner) banner.classList.remove('show');
+}
+
+function sendPushNotif(title, body, icon) {
+  if (!notifEnabled || Notification.permission !== 'granted') return;
+  // Seulement si l'onglet n'est pas actif
+  if (document.hidden) {
+    try {
+      new Notification(title, {
+        body: body,
+        icon: 'data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' rx=\'22\' fill=\'%236c63ff\'/><text y=\'.9em\' font-size=\'72\' x=\'12\'>💬</text></svg>',
+        badge: 'data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' rx=\'22\' fill=\'%236c63ff\'/></svg>',
+        tag: 'zara-msg',
+        renotify: true,
+        silent: false
+      });
+    } catch(e) {}
+  }
+  // Mettre à jour le titre de l'onglet
+  updateTabTitle(title);
+}
+
+// Badge sur l'onglet
+let originalTitle = 'Zara — Messagerie';
+let unreadTabCount = 0;
+let tabTitleInterval = null;
+
+function updateTabTitle(senderName) {
+  unreadTabCount++;
+  clearInterval(tabTitleInterval);
+  let toggle = true;
+  tabTitleInterval = setInterval(() => {
+    document.title = toggle
+      ? `🔔 ${unreadTabCount} message${unreadTabCount > 1 ? 's' : ''} — Zara`
+      : originalTitle;
+    toggle = !toggle;
+  }, 1200);
+}
+
+function resetTabTitle() {
+  unreadTabCount = 0;
+  clearInterval(tabTitleInterval);
+  document.title = originalTitle;
+}
+
+// Réinitialiser quand l'utilisateur revient sur l'onglet
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) resetTabTitle();
+});
+
+// Intercepter l'envoi de messages pour déclencher des notifs simulées
+const _origSendMsg = window.sendMessage;
+if (typeof _origSendMsg === 'function') {
+  window.sendMessage = function() {
+    _origSendMsg();
+    // Simuler une réponse avec notification après quelques secondes
+    const currentC = CONTACTS.find(c => c.id === currentChatId);
+    if (currentC && !currentC.group) {
+      const delay = 3000 + Math.random() * 4000;
+      setTimeout(() => {
+        const responses = [
+          "Ok je vois 👍",
+          "Super ! 😊",
+          "D'accord, je reviens vers toi.",
+          "Reçu ✓",
+          "Merci pour l'info !",
+          "👌",
+          "On se voit bientôt ? 🤝"
+        ];
+        const resp = responses[Math.floor(Math.random() * responses.length)];
+        sendPushNotif(currentC.name, resp, currentC.avatar);
+      }, delay);
+    }
+  };
+}
+
 </script>
 </body>
 </html>
